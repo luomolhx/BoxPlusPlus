@@ -3,8 +3,12 @@ package com.silvermoon.boxplusplus.common.loader;
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
 import static gregtech.api.recipe.RecipeMaps.multiblockChemicalReactorRecipes;
+import static gregtech.api.util.GTRecipeBuilder.MINUTES;
+import static gregtech.api.util.GTRecipeBuilder.SECONDS;
+import static gregtech.api.util.GTRecipeBuilder.HOURS;
 import static gregtech.api.util.GTRecipeConstants.*;
 
+import gregtech.api.util.recipe.Scanning;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -37,7 +41,7 @@ public class RecipeLoader implements Runnable {
     public static void addBoxRecipe() {
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 13532))
-            .metadata(RESEARCH_TIME, 64000)
+            .metadata(SCANNING, new Scanning(3200 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(TileEntitiesLoader.Box.getStackForm(1))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing, 1, 0),
@@ -78,7 +82,7 @@ public class RecipeLoader implements Runnable {
             .addTo(assemblerRecipes);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.SpaceExtend))
-            .metadata(RESEARCH_TIME, 24000)
+            .metadata(SCANNING, new Scanning(1200 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.SpaceCompress, 16, 0))
             .itemInputs(
                 ItemList.Casing_StableTitanium.get(64),
@@ -95,7 +99,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.SpaceCompress))
-            .metadata(RESEARCH_TIME, 48000)
+            .metadata(SCANNING, new Scanning(2400 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.SpaceConstraint, 2, 0))
             .itemInputs(
                 ItemList.Casing_StableTitanium.get(64),
@@ -149,7 +153,7 @@ public class RecipeLoader implements Runnable {
             .addTo(assemblerRecipes);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.BoxRing))
-            .metadata(RESEARCH_TIME, 48000)
+            .metadata(SCANNING, new Scanning(2400 * MINUTES, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxRing2, 1, 0))
             .itemInputs(
                 GTOreDictUnificator.get("ringLaurenium", 64),
@@ -254,7 +258,7 @@ public class RecipeLoader implements Runnable {
             .addTo(assemblerRecipes);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 0))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 4))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing2, 2),
@@ -271,7 +275,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 1))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 5))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing2, 2),
@@ -292,7 +296,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 2))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 6))
             .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 792),
@@ -314,7 +318,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 3))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 7))
             .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 850),
@@ -437,7 +441,7 @@ public class RecipeLoader implements Runnable {
     public static void addUpgradeModuleRecipe() {
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.BoxModule, 1, 0))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModuleUpgrad, 1, 0))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing, 8),
@@ -454,7 +458,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.BoxModule, 1, 1))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModuleUpgrad, 1, 1))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing, 8),
@@ -473,7 +477,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.BoxModule, 1, 2))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModuleUpgrad, 1, 2))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing, 8),
@@ -489,7 +493,7 @@ public class RecipeLoader implements Runnable {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(BlockRegister.BoxModule, 1, 3))
-            .metadata(RESEARCH_TIME, 12000)
+            .metadata(SCANNING, new Scanning(600 * SECONDS, TierEU.RECIPE_LuV))
             .itemOutputs(new ItemStack(BlockRegister.BoxModuleUpgrad, 1, 3))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing, 8),
