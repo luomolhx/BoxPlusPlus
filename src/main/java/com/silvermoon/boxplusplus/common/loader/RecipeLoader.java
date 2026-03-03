@@ -160,7 +160,7 @@ public class RecipeLoader implements Runnable {
                 GTOreDictUnificator.get(OrePrefixes.pipeMedium, Materials.Titanium, 64),
                 GTOreDictUnificator.get(OrePrefixes.rotor, Materials.Titanium, 64),
                 ItemList.Field_Generator_IV.get(4),
-                new Object[] { OrePrefixes.circuit.get(Materials.Ultimate), 4 })
+                new Object[] { OrePrefixes.circuit.get(Materials.ZPM), 4 })
             .fluidInputs(FluidRegistry.getFluidStack("molten.tanmolyium beta-c", 51840))
             .eut(TierEU.RECIPE_LuV)
             .duration(1200)
@@ -276,7 +276,7 @@ public class RecipeLoader implements Runnable {
             .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 4))
             .itemInputs(
                 new ItemStack(BlockRegister.BoxRing2, 2),
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 860),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 3004),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 64, 32764),
                 GTModHandler.getModItem(OpenComputers.ID, "item", 9, 103),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 9, 15470),
