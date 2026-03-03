@@ -1,18 +1,41 @@
 package com.silvermoon.boxplusplus.common.loader;
 
-import static gregtech.api.enums.Mods.*;
+import static gregtech.api.enums.Mods.AE2Stuff;
+import static gregtech.api.enums.Mods.AppliedEnergistics2;
+import static gregtech.api.enums.Mods.Avaritia;
+import static gregtech.api.enums.Mods.BartWorks;
+import static gregtech.api.enums.Mods.Chisel;
+import static gregtech.api.enums.Mods.ExtraUtilities;
+import static gregtech.api.enums.Mods.GTNHIntergalactic;
+import static gregtech.api.enums.Mods.GTPlusPlus;
+import static gregtech.api.enums.Mods.GalacticraftCore;
+import static gregtech.api.enums.Mods.GalacticraftMars;
+import static gregtech.api.enums.Mods.GoodGenerator;
+import static gregtech.api.enums.Mods.GregTech;
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.enums.Mods.OpenComputers;
+import static gregtech.api.enums.Mods.TecTech;
+import static gregtech.api.enums.Mods.ThaumicBases;
+import static gregtech.api.enums.Mods.UniversalSingularities;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
 import static gregtech.api.recipe.RecipeMaps.multiblockChemicalReactorRecipes;
-import static gregtech.api.util.GTRecipeConstants.*;
+import static gregtech.api.util.GTRecipeConstants.AssemblyLine;
+import static gregtech.api.util.GTRecipeConstants.RESEARCH_ITEM;
+import static gregtech.api.util.GTRecipeConstants.SCANNING;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import gregtech.api.enums.*;
+import gregtech.api.enums.GTValues;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
@@ -731,63 +754,81 @@ public class RecipeLoader implements Runnable {
         // AMD 晶圆厂技术资料（基础）
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 0))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 3004))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 3004),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_LuV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 液位调节器实验模型
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 1))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 31077))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 31077),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 固态物质重塑理论研究
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 2))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 992))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 992),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 抽水马桶设计图纸（初版）
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 3))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 850))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 850),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 温差产生原理实验装置
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 4))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 12730))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 12730),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UEV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 超结构装配理论框架
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 5))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 17001))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 17001),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UEV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 物态并联原理研究笔记
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 6))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 31150))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 31150),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UEV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 聚焦技术实验报告
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 7))
-            .itemInputs(GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 15472))
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 15472),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UEV)
             .duration(1200)
             .addTo(assemblerRecipes);
         // 深蓝物质研究样本
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemRegister.bmResearchItem, 1, 8))
-            .itemInputs(GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockAdvancedCraftingUnit", 1, 3))
+            .itemInputs(
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockAdvancedCraftingUnit", 1, 3),
+                GTUtility.getIntegratedCircuit(1))
             .eut(TierEU.RECIPE_UIV)
             .duration(1200)
             .addTo(assemblerRecipes);
