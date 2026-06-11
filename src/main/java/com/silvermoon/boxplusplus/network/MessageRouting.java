@@ -12,7 +12,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
-import gregtech.api.gui.modularui.GTUIInfos;
 import io.netty.buffer.ByteBuf;
 
 public class MessageRouting implements IMessage {
@@ -51,7 +50,7 @@ public class MessageRouting implements IMessage {
                     GTMachineBox box = Util.boxMap.get(player);
                     box.routingMap.add(new BoxRoutings(message.nbt));
                     player.openContainer.detectAndSendChanges();
-                    GTUIInfos.openGTTileEntityUI(box.getBaseMetaTileEntity(), player);
+                    box.openGui(player);
                 }
             }
             return null;

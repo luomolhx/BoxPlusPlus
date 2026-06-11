@@ -90,7 +90,7 @@ public class RecipeLoader implements Runnable {
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 2, 32),
                 ItemList.Electric_Motor_LuV.get(16),
                 ItemList.Electric_Piston_LuV.get(16),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.IrradiantReinforcedTitaniumPlate", 4))
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "IrradiantReinforcedTitaniumPlate", 4))
             .eut(TierEU.RECIPE_LuV)
             .duration(400)
             .addTo(assemblerRecipes);
@@ -104,7 +104,7 @@ public class RecipeLoader implements Runnable {
                 ItemList.Super_Tank_LV.get(1),
                 ItemList.Super_Chest_LV.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 33),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.TitaniumPlatedReinforcedStone", 64))
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "TitaniumPlatedReinforcedStone", 64))
             .fluidInputs(
                 FluidRegistry.getFluidStack("ic2coolant", 10000),
                 FluidRegistry.getFluidStack("molten.indalloy140", 1440))
@@ -363,7 +363,7 @@ public class RecipeLoader implements Runnable {
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 12730),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 12731),
                 ItemList.Casing_Coil_Cupronickel.get(64),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.QuintupleCompressedCoalCoke", 2),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "QuintupleCompressedCoalCoke", 2),
                 GTOreDictUnificator.get("dustDarkAsh", 64), ItemList.Reactor_Coolant_Sp_6.get(1),
                 new ItemStack(BlockRegister.BoxRing3, 4), },
             new FluidStack[] { FluidRegistry.getFluidStack("molten.ethylcyanoacrylatesuperglue", 128000),
@@ -419,7 +419,7 @@ public class RecipeLoader implements Runnable {
             new ItemStack[] { GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 15465),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 15465),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 15465), ItemList.Sensor_UEV.get(32),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.LaserEmitter", 1),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "LaserEmitter", 1),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 15165), ItemList.Emitter_UEV.get(64),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 15265),
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 15465),
@@ -687,11 +687,11 @@ public class RecipeLoader implements Runnable {
                 'C',
                 GTModHandler.getModItem(GalacticraftMars.ID, "tile.marsMachine", 1, 4),
                 'F',
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "StargateShieldingFoil", 1),
                 'E',
                 new ItemStack(BlockRegister.BoxModule, 1, 10),
                 'D',
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.HeavyDutyRocketEngineTier4", 1));
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "HeavyDutyRocketEngineTier4", 1));
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             new ItemStack(BlockRegister.BoxModule, 1, 13),
             (int) TierEU.UXV,

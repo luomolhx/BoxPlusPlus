@@ -52,7 +52,6 @@ import com.silvermoon.boxplusplus.util.*;
 
 import appeng.api.AEApi;
 import gregtech.api.enums.Textures;
-import gregtech.api.gui.modularui.GTUIInfos;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
@@ -64,6 +63,8 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
+import gregtech.api.structure.error.StructureErrorRegistry;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
 import gregtech.common.misc.WirelessNetworkManager;
@@ -78,8 +79,8 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
     private static final String STRUCTURE_PIECE_FirstRing = "FirstRing";
     private static final String STRUCTURE_PIECE_SecondRing = "SecondRing";
     private static final String STRUCTURE_PIECE_Final = "Final";
-    private static final IIconContainer boxActive = new Textures.BlockIcons.CustomIcon("iconsets/EM_COLLIDER_ACTIVE");
-    private static final IIconContainer boxInactive = new Textures.BlockIcons.CustomIcon("iconsets/EM_COLLIDER");
+    private static final IIconContainer boxActive = Textures.BlockIcons.custom("iconsets/EM_COLLIDER_ACTIVE");
+    private static final IIconContainer boxInactive = Textures.BlockIcons.custom("iconsets/EM_COLLIDER");
     private int extendCasing = 0;
     private final boolean[] moduleSwitch = new boolean[15];
     private boolean[] moduleActive = new boolean[15];
@@ -881,7 +882,7 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
             buildHatchAdder(GTMachineBox.class)
                 .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Energy, ExoticEnergy, Maintenance)
                 .casingIndex(114 << 7)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(onElementPass(i -> ++i.extendCasing, ofBlock(BlockRegister.SpaceExtend, 0))))
             .addElement('D', Util.RingTileAdder((v, t) -> {
                 if ((t.getBlockType()
@@ -1215,16 +1216,16 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
         return true;
     }
 
-    @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    protected boolean checkMachineLegacy(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack,
+        List<StructureError> errors) {
         ringCount = 1;
         debug = false;
         moduleActive = new boolean[moduleActive.length];
         machineError = new int[2];
         switch (ringCountSet) {
             case 1 -> {
-                if (checkPiece(STRUCTURE_PIECE_MainFrames, 3, 3, 0)
-                    && checkPiece(STRUCTURE_PIECE_FirstRing, 11, 3, 8)) {
+                if (checkPiece(STRUCTURE_PIECE_MainFrames, 3, 3, 0, errors)
+                    && checkPiece(STRUCTURE_PIECE_FirstRing, 11, 3, 8, errors)) {
                     ringCount = 1;
                     break;
                 }
@@ -1236,8 +1237,9 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
                 return false;
             }
             case 2 -> {
-                if (checkPiece(STRUCTURE_PIECE_MainFrames, 3, 3, 0) && checkPiece(STRUCTURE_PIECE_FirstRing, 11, 3, 8)
-                    && checkPiece(STRUCTURE_PIECE_SecondRing, 17, 5, 14)) {
+                if (checkPiece(STRUCTURE_PIECE_MainFrames, 3, 3, 0, errors)
+                    && checkPiece(STRUCTURE_PIECE_FirstRing, 11, 3, 8, errors)
+                    && checkPiece(STRUCTURE_PIECE_SecondRing, 17, 5, 14, errors)) {
                     ringCount = 2;
                     maxParallel = 6400;
                     maxRouting = 64;
@@ -1251,9 +1253,10 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
                 return false;
             }
             case 3 -> {
-                if (checkPiece(STRUCTURE_PIECE_MainFrames, 3, 3, 0) && checkPiece(STRUCTURE_PIECE_FirstRing, 11, 3, 8)
-                    && checkPiece(STRUCTURE_PIECE_SecondRing, 17, 5, 14)
-                    && checkPiece(STRUCTURE_PIECE_Final, 23, 5, 20)) {
+                if (checkPiece(STRUCTURE_PIECE_MainFrames, 3, 3, 0, errors)
+                    && checkPiece(STRUCTURE_PIECE_FirstRing, 11, 3, 8, errors)
+                    && checkPiece(STRUCTURE_PIECE_SecondRing, 17, 5, 14, errors)
+                    && checkPiece(STRUCTURE_PIECE_Final, 23, 5, 20, errors)) {
                     ringCount = 3;
                     maxParallel = 128000;
                     maxRouting = 128;
@@ -1276,7 +1279,8 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
                     getModuleByIndex(i).name,
                     getModuleByIndex(i).horizontalOffset,
                     getModuleByIndex(i).verticalOffset,
-                    getModuleByIndex(i).depthOffset)) {
+                    getModuleByIndex(i).depthOffset,
+                    errors)) {
                     moduleActive[i] = true;
                     continue;
                 }
@@ -1302,6 +1306,15 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
             teBoxRing.count = ringCount;
         }
         return true;
+    }
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkMachineLegacy(aBaseMetaTileEntity, aStack, errors)) {
+            if (errors.isEmpty()) {
+                errors.add(StructureErrorRegistry.UNKNOWN_STRUCTURE_ERROR);
+            }
+        }
     }
 
     @Override
@@ -1626,11 +1639,6 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
         maxParallel = NBT.getInteger("maxParallel");
         maxRouting = NBT.getInteger("maxRouting");
         recipe = new BoxRecipe(NBT.getCompoundTag("BoxRecipe"));
-    }
-
-    @Override
-    protected boolean useMui2() {
-        return false;
     }
 
     /**
@@ -2243,7 +2251,7 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
                     BoxRoutings.checkRouting(this);
                     if (!widget.isClient()) {
                         player.closeScreen();
-                        GTUIInfos.openGTTileEntityUI(getBaseMetaTileEntity(), player);
+                        openGui(player);
                     }
                 })
                     .setSize(16, 16)
@@ -2915,7 +2923,7 @@ public class GTMachineBox extends MTEExtendedPowerMultiBlockBase<GTMachineBox> i
                 recipe.islocked = true;
                 if (!widget.isClient()) {
                     player.closeScreen();
-                    GTUIInfos.openGTTileEntityUI(getBaseMetaTileEntity(), player);
+                    openGui(player);
                 }
             })
                 .setSize(20, 20)

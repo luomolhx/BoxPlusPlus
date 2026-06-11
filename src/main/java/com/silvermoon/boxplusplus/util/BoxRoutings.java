@@ -558,8 +558,7 @@ public class BoxRoutings {
                                     return;
                                 }
                                 switch (Circuit.getItemDamage()) {
-                                    case 1 -> recipeMap = RecipeMaps.arcFurnaceRecipes;
-                                    case 2 -> recipeMap = RecipeMaps.plasmaArcFurnaceRecipes;
+                                    case 1, 2 -> recipeMap = RecipeMaps.arcFurnaceRecipes;
                                     default -> {
                                         box.routingStatus = 4;
                                         return;
