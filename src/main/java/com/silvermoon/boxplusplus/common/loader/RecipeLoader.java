@@ -1,6 +1,5 @@
 package com.silvermoon.boxplusplus.common.loader;
 
-import static gregtech.api.enums.Mods.AE2Stuff;
 import static gregtech.api.enums.Mods.AppliedEnergistics2;
 import static gregtech.api.enums.Mods.Avaritia;
 import static gregtech.api.enums.Mods.BartWorks;
@@ -28,6 +27,8 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.silvermoon.boxplusplus.boxplusplus;
+
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -42,6 +43,16 @@ import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.recipe.TTRecipeAdder;
 
 public class RecipeLoader implements Runnable {
+
+    private static boolean debugNull(String recipe, Object... items) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == null || (items[i] instanceof ItemStack is && is.getItem() == null)) {
+                boxplusplus.LOG.warn("Skipping recipe {} — item index {} is null", recipe, i);
+                return false;
+            }
+        }
+        return true;
+    }
 
     public synchronized void run() {
         addBoxRecipe();
@@ -308,28 +319,28 @@ public class RecipeLoader implements Runnable {
             .eut(TierEU.RECIPE_UV)
             .duration(1200)
             .addTo(AssemblyLine);
-        GTValues.RA.stdBuilder()
-            .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 2))
-            .metadata(SCANNING, new Scanning(12000, TierEU.RECIPE_LV))
-            .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 6))
-            .itemInputs(
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 792),
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 992),
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 859),
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 797),
-                GTModHandler.getModItem(AE2Stuff.ID, "Inscriber", 1),
-                ItemList.Component_Sawblade_Diamond.get(1),
-                ItemList.Shape_Extruder_Ingot.get(1),
-                GTModHandler.getModItem(GTPlusPlus.ID, "MU-metaitem.01", 1, 32152),
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 798),
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 31075),
-                GTOreDictUnificator.get("wireGt01SuperconductorUV", 6),
-                GTModHandler.getModItem(ThaumicBases.ID, "voidAnvil", 16),
-                new ItemStack(BlockRegister.BoxRing2, 2))
-            .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 8000))
-            .eut(TierEU.RECIPE_UV)
-            .duration(1200)
-            .addTo(AssemblyLine);
+        ItemStack[] module6Inputs = { GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 792),
+            GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 992),
+            GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 859),
+            GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 797),
+            GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockInscriber", 1),
+            ItemList.Component_Sawblade_Diamond.get(1), ItemList.Shape_Extruder_Ingot.get(1),
+            GTModHandler.getModItem(GTPlusPlus.ID, "MU-metaitem.01", 1, 32152),
+            GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 798),
+            GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 31075),
+            GTOreDictUnificator.get("wireGt01SuperconductorUV", 6),
+            GTModHandler.getModItem(ThaumicBases.ID, "voidAnvil", 16), new ItemStack(BlockRegister.BoxRing2, 2), };
+        if (debugNull("addModuleRecipe_6", (Object[]) module6Inputs)) {
+            GTValues.RA.stdBuilder()
+                .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 2))
+                .metadata(SCANNING, new Scanning(12000, TierEU.RECIPE_LV))
+                .itemOutputs(new ItemStack(BlockRegister.BoxModule, 1, 6))
+                .itemInputs(module6Inputs)
+                .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 8000))
+                .eut(TierEU.RECIPE_UV)
+                .duration(1200)
+                .addTo(AssemblyLine);
+        }
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, new ItemStack(ItemRegister.bmResearchItem, 1, 3))
             .metadata(SCANNING, new Scanning(12000, TierEU.RECIPE_LV))
